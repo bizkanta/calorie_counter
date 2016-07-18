@@ -17,7 +17,7 @@ con.connect(function(err){
   console.log('Connection established');
 });
 
-var Meals = (function(){
+var meals = (function(){
   function getMeals(callback){
     con.query('SELECT * FROM calorie_counter;', function(err, meals){
       if (err) {
@@ -28,13 +28,20 @@ var Meals = (function(){
     });
   };
 
-  function addMeal(name, calories, date, callback){
-    con.query('INSERT INTO calorie_counter SET name = ?, calories = ?, date = ?', [name, calories, date], function(err,meal){
+  function addMeal(attributes, callback){
+    var query = 'INSERT INTO calorie_counter SET name = ?, calories = ?, date = ?';
+    var queryParams = [attributes.name, attributes.calories, attributes.date];
+    con.query(query, queryParams, function(err, meal){
       if(err) {
         console.log(err.toString());
         return;
       }
-      callback( {id: meal.insertId, name: name, calories: calories, date: date} );
+      callback({
+        id: meal.insertId,
+        name: attributes.name,
+        calories: attributes.calories,
+        date: attributes.date
+      });
     });
   };
 
@@ -44,4 +51,4 @@ var Meals = (function(){
   };
 })();
 
-module.exports = Meals;
+module.exports = meals;
