@@ -17,8 +17,8 @@ app.get('/meals', function(req, res) {
 });
 
 app.post('/meals', urlencodedParser, function(req, res) {
-  dbQueries.addMeal(req.body.name, req.body.calories, req.body.date, function(meal, calories, date){
-    res.send( {meal, calories, date} );
+  dbQueries.addMeal(req.body.name, req.body.calories, req.body.date, function(row){
+    res.send({row});
   });
 });
 
