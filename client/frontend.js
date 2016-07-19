@@ -5,6 +5,12 @@
   var request = new Xhr_request();
 
   var mealsList = document.querySelector('.meals');
+  var nameInputField = document.querySelector('#name');
+  var calorieInputField = document.querySelector('#calories');
+  var dateInputField = document.querySelector('#date');
+  var addButton = document.querySelector('.add_button');
+
+  addButton.addEventListener('click', newMealItem);
 
   request.getMealsFromServer(insertItemsToDOM);
 
@@ -12,6 +18,20 @@
     items.forEach(function(item) {
       appendMeals(item);
     });
+  }
+
+  function newMealItem(event) {
+    event.preventDefault();
+    var mealItem = {
+      name: nameInputField.value,
+      calories: calorieInputField.value,
+      date: dateInputField.value
+    };
+    request.addMealToServer(mealItem, appendMeals);
+    nameInputField.value = '';
+    calorieInputField.value = '';
+    dateInputField.value = '';
+    nameInputField.focus();
   }
 
   function appendMeals(item) {
@@ -23,4 +43,5 @@
     </div>`;
     mealsList.innerHTML += mealItem;
   }
+
 })(document, Xhr_request);

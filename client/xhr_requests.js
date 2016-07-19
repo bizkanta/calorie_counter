@@ -7,6 +7,11 @@ function Xhr_request(){
     this.createRequest('GET', this.url, null, callback);
   };
 
+  this.addMealToServer = function(meal, callback){
+  var newItem = JSON.stringify(meal);
+  this.createRequest('POST', this.url, newItem, callback);
+}
+
   this.createRequest = function(method, url, data, callback){
     var xhr = new XMLHttpRequest();
     xhr.open(method, url);
