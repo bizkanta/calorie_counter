@@ -45,9 +45,23 @@ var meals = (function(){
     });
   };
 
+  function deleteMeal(id, callback){
+    con.query('DELETE FROM calorie_counter WHERE id = ?', id, function(err, meal){
+      if(err) {
+        console.log(err.toString());
+        return;
+      } else if (meal.affectedRows === 1) {
+        callback({"status": "ok"});
+      } else {
+        callback({"status": "not exists"});
+      }
+    });
+  }
+
   return {
     getMeals: getMeals,
-    addMeal: addMeal
+    addMeal: addMeal,
+    deleteMeal: deleteMeal
   };
 })();
 

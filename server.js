@@ -22,6 +22,13 @@ app.post('/meals', urlencodedParser, function(req, res) {
   });
 });
 
+app.delete('/meals/:id', urlencodedParser, function(req, res) {
+  var id = req.params.id;
+  dbQueries.deleteMeal(id, function(meal){
+    res.send(meal);
+  });
+});
+
 var port = 3000;
 app.listen(port, function(){
   console.log('I am listening on port ' + port);
