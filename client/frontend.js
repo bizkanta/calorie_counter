@@ -8,7 +8,7 @@
   var nameInputField = document.querySelector('#name');
   var calorieInputField = document.querySelector('#calories');
   var dateInputField = document.querySelector('#date');
-  var addButton = document.querySelector('.add_button');
+  var addButton = document.querySelector('.addButton');
 
   addButton.addEventListener('click', newMealItem);
 
