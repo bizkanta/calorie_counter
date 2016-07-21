@@ -1,11 +1,15 @@
-* {
+body {
   box-sizing: border-box;
   font-family: Lato, sans-serif;
+  background-image: url(./pictures/cherry-fresh-texture-image-background-food-wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .container {
   max-width: 800px;
-  background: #FADCAE;
+  background: rgba(250,173,120,.7);
   margin: 20px auto;
 }
 
@@ -28,6 +32,7 @@ input {
   outline: none;
   border: none;
   margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 #button {
@@ -38,7 +43,8 @@ input {
   cursor: pointer;
   border: none;
   outline: none;
-  background: #FFAE53;
+  background: #FF6540;
+  margin-left: 5px;
 }
 
 .meals {
@@ -47,27 +53,30 @@ input {
 
 .mealItem {
   display: flex;
+  flex-wrap: wrap;
   padding: 8px;
-  position: relative;
   border-bottom: 1px dotted #E52B00;
   color: #A30A00;
   cursor: pointer;
+  text-align: center;
 }
 
 .selectedMeal {
-  background: #FFAE53;
+  background: #FF6540;
 }
 
 .mealItem:hover {
-  background: #FFAE53;
+  background: #FF6540;
+}
+
+.mealName {
+  width: 150px;
 }
 
 .mealCalories {
-  position: absolute;
-  left: 200px;
+  width: 150px;
 }
 
 .mealDate {
-  position: absolute;
-  left: 360px;
+  width: 150px;
 }

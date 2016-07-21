@@ -48,10 +48,13 @@
   function deleteSelectedItem(event) {
     var selectedItem = document.querySelector('.selectedMeal');
     if (selectedItem) {
-      var selectedId = selectedItem.getAttribute('id');
-      request.deleteMealFromServer(selectedId, function() {
-        selectedItem.remove();
-      });
+      var confirmation = confirm("Are you sure you want to delete this meal?");
+      if (confirmation) {
+        var selectedId = selectedItem.getAttribute('id');
+        request.deleteMealFromServer(selectedId, function() {
+          selectedItem.remove();
+        });
+      }
     }
   }
 
@@ -75,8 +78,7 @@
   }
 
   function appendMeal(item) {
-    var date = moment().
-    item.date.substring(0, 10) + ' , ' + item.date.substring(12, 16);
+    var date = item.date.substring(0, 10) + ' , ' + item.date.substring(12, 16);
     var mealItem = `
     <div id="${item.id}" class="mealItem">
       <div class="mealName">${item.name}</div>
