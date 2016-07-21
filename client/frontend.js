@@ -17,8 +17,7 @@
   function getCurrentDateAsString() {
     var now = new Date();
     var string = now.toISOString().replace('Z', '');
-    console.log(string)
-    return '2016-07-20 20:09:47.817'
+    // console.log(string)
     return string;
   }
   dateInputField.defaultValue = getCurrentDateAsString();
@@ -53,6 +52,7 @@
         var selectedId = selectedItem.getAttribute('id');
         request.deleteMealFromServer(selectedId, function() {
           selectedItem.remove();
+          updateTotal();
         });
       }
     }
@@ -77,6 +77,21 @@
     return findAncestorByClass(element.parentNode, classSelector);
   }
 
+  function getTotalCalories() {
+    var calories = document.querySelectorAll('.mealCalories');
+    var total = 0;
+    for (var i = 0; i < calories.length; i++) {
+      var calorie = parseInt(calories[i].textContent);
+      total += calorie;
+    }
+    return total;
+  }
+
+  function updateTotal() {
+    var total = document.querySelector('.total');
+    total.textContent = getTotalCalories() + ' kcal';
+  }
+
   function appendMeal(item) {
     var date = item.date.substring(0, 10) + ' , ' + item.date.substring(12, 16);
     var mealItem = `
@@ -86,6 +101,7 @@
       <div class="mealDate">${date}</div>
     </div>`;
     mealsList.innerHTML += mealItem;
+    updateTotal();
   }
 
 })(document, Xhr_request, moment);

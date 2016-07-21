@@ -81,3 +81,15 @@ input {
 .mealDate {
   width: 150px;
 }
+
+.totalField {
+  display: flex;
+  color: #A30A00;
+  justify-content: center;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.totalText {
+  width: 130px;
+}

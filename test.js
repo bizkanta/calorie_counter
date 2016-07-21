@@ -30,7 +30,7 @@ tape('addmeal calls query', function(t) {
     connect: function(){}
   };
   var testMealModule = meal(mockConnection);
-  testMealModule.addMeal({name: "alma"});
+  testMealModule.addMeal({name: "alma", calories: "2", date: "ma"});
   t.ok(mockConnection.query.called);
   t.end();
 });
@@ -49,11 +49,7 @@ tape('addmeal calls query with proper sql', function(t) {
     date: "ma"
   };
 
-  var expectedSQL = 'INSERT INTO calorie_counter ' +
-    '(name, calories, date)' +
-    ' VALUES (\'1\', \'alma\', \'2\', \'ma\')';
-
   testMealModule.addMeal(testMeal);
-  t.ok(mockConnection.query.calledWithMatch(expectedSQL));
+  t.ok(mockConnection.query.calledWithMatch('INSERT INTO calorie_counter SET name = ?, calories = ?, date = ?', ['alma', 2, 'ma']));
   t.end();
 });

@@ -4,7 +4,6 @@ var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var db = require('./db_queries');
-var dbQueries = db(con);
 
 var app = express();
 
@@ -14,6 +13,8 @@ var con = mysql.createConnection({
   password: 'password987',
   database: 'calorie_counter'
 });
+
+var dbQueries = db(con);
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.json());
