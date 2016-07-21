@@ -1,10 +1,19 @@
 'use strict';
 
 var express = require('express');
+var mysql = require('mysql');
 var bodyParser = require('body-parser');
-var dbQueries = require('./db_queries');
+var db = require('./db_queries');
+var dbQueries = db(con);
 
 var app = express();
+
+var con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password987',
+  database: 'calorie_counter'
+});
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.json());

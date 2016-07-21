@@ -9,8 +9,9 @@ body {
 
 .container {
   max-width: 800px;
-  background: rgba(250,173,120,.7);
+  background: rgba(250,173,120,.65);
   margin: 20px auto;
+  border-radius: 10px;
 }
 
 h1 {

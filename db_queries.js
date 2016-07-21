@@ -1,23 +1,15 @@
 'use strict';
 
-var mysql = require('mysql');
+var meal = (function(con){
 
-var con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password987',
-  database: 'calorie_counter'
-});
+  con.connect(function(err){
+    if(err){
+      console.log('Error connecting to Db');
+      return;
+    }
+    console.log('Connection established');
+  });
 
-con.connect(function(err){
-  if(err){
-    console.log('Error connecting to Db');
-    return;
-  }
-  console.log('Connection established');
-});
-
-var meals = (function(){
   function getMeals(callback){
     con.query('SELECT * FROM calorie_counter;', function(err, meals){
       if (err) {
@@ -63,6 +55,6 @@ var meals = (function(){
     addMeal: addMeal,
     deleteMeal: deleteMeal
   };
-})();
+});
 
-module.exports = meals;
+module.exports = meal;
