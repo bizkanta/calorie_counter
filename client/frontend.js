@@ -1,8 +1,9 @@
 'use strict';
 
-(function(document, Xhr_request, moment){
+(function(document, Xhr_request, moment, Helper){
 
   var request = new Xhr_request();
+  var helper = new Helper();
 
   var mealsList = document.querySelector('.meals');
   var nameInputField = document.querySelector('#name');
@@ -14,12 +15,7 @@
   addButton.addEventListener('click', addNewMealItem);
   deleteButton.addEventListener('click', deleteSelectedItem);
 
-  function getCurrentDateAsString() {
-    var now = moment().format('YYYY-MM-DDTHH:mm');
-    console.log(now);
-    return now;
-  }
-  dateInputField.defaultValue = getCurrentDateAsString();
+  dateInputField.defaultValue = helper.getCurrentDateAsString();
 
   request.getMealsFromServer(insertItemsToDOM);
 
@@ -41,7 +37,7 @@
         appendMeal(item);
         nameInputField.value = '';
         calorieInputField.value = '';
-        dateInputField.value = getCurrentDateAsString();
+        dateInputField.value = helper.getCurrentDateAsString();
         nameInputField.focus();
       });
     }
@@ -76,16 +72,9 @@
     }
     var isMealsContainerClicked = event.target.classList.contains('meals');
     if (!isMealsContainerClicked) {
-      var selectedRow = findAncestorByClass(event.target, 'mealItem');
+      var selectedRow = helper.findAncestorByClass(event.target, 'mealItem');
       selectedRow.classList.add('selectedMeal');
     }
-  }
-
-  function findAncestorByClass(element, classSelector) {
-    if (element.classList.contains(classSelector)) {
-      return element;
-    }
-    return findAncestorByClass(element.parentNode, classSelector);
   }
 
   function updateTotal() {
@@ -104,8 +93,7 @@
   }
 
   function appendMeal(item) {
-    // var date = date.getFormattedDate(item.date);
-    var date = moment(item.date).format('YYYY-MM-DD HH:mm');
+    var date = helper.getFormattedDate(item.date);
     var mealItem = `
     <div id="${item.id}" class="mealItem">
       <div class="mealName">${item.name}</div>
@@ -116,4 +104,4 @@
     updateTotal();
   }
 
-})(document, Xhr_request, moment);
+})(document, Xhr_request, moment, Helper);
