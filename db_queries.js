@@ -43,7 +43,7 @@ var meal = (function(con){
         console.log(err.toString());
         return;
       } else if (meal.affectedRows === 1) {
-        callback({"status": "ok"});
+        callback({"status": "ok", id: id});
       } else {
         callback({"status": "not exists"});
       }

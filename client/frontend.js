@@ -15,10 +15,9 @@
   deleteButton.addEventListener('click', deleteSelectedItem);
 
   function getCurrentDateAsString() {
-    var now = new Date();
-    var string = now.toISOString().replace('Z', '');
-    // console.log(string)
-    return string;
+    var now = moment().format('YYYY-MM-DDTHH:mm');
+    console.log(now);
+    return now;
   }
   dateInputField.defaultValue = getCurrentDateAsString();
 
@@ -32,23 +31,35 @@
 
   function addNewMealItem(event) {
     event.preventDefault();
-    var mealItem = {
-      name: nameInputField.value,
-      calories: calorieInputField.value,
-      date: dateInputField.value
-    };
-    request.addMealToServer(mealItem, appendMeal);
-    nameInputField.value = '';
-    calorieInputField.value = '';
-    dateInputField.value = '';
-    nameInputField.focus();
+    if (formIsValid()) {
+      var mealItem = {
+        name: nameInputField.value,
+        calories: calorieInputField.value,
+        date: dateInputField.value
+      };
+      request.addMealToServer(mealItem, function(item) {
+        appendMeal(item);
+        nameInputField.value = '';
+        calorieInputField.value = '';
+        dateInputField.value = getCurrentDateAsString();
+        nameInputField.focus();
+      });
+    }
+  }
+
+  function formIsValid() {
+    var nameFieldIsValid = nameInputField.value.length > 2;
+    var calorieFieldIsValid = parseInt(calorieInputField.value) >= 0;
+    return nameFieldIsValid && calorieFieldIsValid;
   }
 
   function deleteSelectedItem(event) {
     var selectedItem = document.querySelector('.selectedMeal');
+    var isConfirmChecked = document.getElementById('confirm').checked;
     if (selectedItem) {
-      var confirmation = confirm("Are you sure you want to delete this meal?");
-      if (confirmation) {
+      var isDeletable = !isConfirmChecked ||
+        (isConfirmChecked && confirm("Are you sure you want to delete this meal?"));
+      if (isDeletable) {
         var selectedId = selectedItem.getAttribute('id');
         request.deleteMealFromServer(selectedId, function() {
           selectedItem.remove();
@@ -77,6 +88,11 @@
     return findAncestorByClass(element.parentNode, classSelector);
   }
 
+  function updateTotal() {
+    var total = document.querySelector('.total');
+    total.textContent = getTotalCalories();
+  }
+
   function getTotalCalories() {
     var calories = document.querySelectorAll('.mealCalories');
     var total = 0;
@@ -87,13 +103,9 @@
     return total;
   }
 
-  function updateTotal() {
-    var total = document.querySelector('.total');
-    total.textContent = getTotalCalories() + ' kcal';
-  }
-
   function appendMeal(item) {
-    var date = item.date.substring(0, 10) + ' , ' + item.date.substring(12, 16);
+    // var date = date.getFormattedDate(item.date);
+    var date = moment(item.date).format('YYYY-MM-DD HH:mm');
     var mealItem = `
     <div id="${item.id}" class="mealItem">
       <div class="mealName">${item.name}</div>

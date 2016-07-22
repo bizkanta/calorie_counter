@@ -10,5 +10,6 @@ module.exports = {
 "no-console": "off",
 "strict": "off",
 "vars-on-top": "off",
+"no-use-before-define": ["error", { "functions": false, "classes": true }]
 }
 };

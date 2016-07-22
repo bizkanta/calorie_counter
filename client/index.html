@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Calorie_counter</title>
     <link rel="stylesheet" href="style.css">
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
   </head>
   <body>
     <div class="container">
@@ -16,15 +16,17 @@
         <input type="number" id="calories" placeholder="Calories" min="0">
         <label for="date"></label>
         <input type="datetime-local" id="date" placeholder="Date">
-        <div>
-          <button name="button" type="submit" id="button" class="addButton">Add</button>
-          <button name="button" type="submit" id="button" class="deleteButton">Delete</button>
+        <div class="buttonRow">
+            <button name="button" type="submit" id="button" class="addButton">Add</button>
+            <button name="button" type="submit" id="button" class="deleteButton">Delete</button>
+            <label for="confirm" class="confirmQuestion">Confirm?</label>
+            <input type="checkbox" id="confirm"></input>
         </div>
       </form>
       <div class="meals"></div>
-      <div class='totalField'>
+      <div class="totalField">
         <div class="totalText">Total calories:</div>
-        <div class='total'></div>
+        <div><span class="total"></span> kCal</div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
