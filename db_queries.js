@@ -39,11 +39,10 @@ var meal = (function(con){
 
   function deleteMeal(id, callback){
     con.query('DELETE FROM calorie_counter WHERE id = ?', id, function(err, meal){
-      if(err) {
-        console.log(err.toString());
-        return;
-      } else if (meal.affectedRows === 1) {
-        callback({ id: id });
+      if (meal.affectedRows === 1) {
+        callback(null, { id: id });
+      } else if (err) {
+        callback({'error': err.toString()}, { id: id });
       } else {
         callback({"status": "not exists"});
       }

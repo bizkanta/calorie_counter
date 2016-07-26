@@ -34,8 +34,12 @@ app.post('/meals', urlencodedParser, function(req, res) {
 
 app.delete('/meals/:id', urlencodedParser, function(req, res) {
   var id = req.params.id;
-  dbQueries.deleteMeal(id, function(meal){
-    res.send(meal);
+  dbQueries.deleteMeal(id, function(err, meal){
+    if (err) {
+      res.status(404).json(err);
+    } else {
+      res.status(200).json(meal);
+    }
   });
 });
 
